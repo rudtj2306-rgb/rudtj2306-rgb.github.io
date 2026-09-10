@@ -25,6 +25,7 @@ body{
   background:var(--bg); color:var(--ink);
   font-size:15px; line-height:1.75; font-weight:400;
   -webkit-font-smoothing:antialiased;
+  word-break:keep-all; overflow-wrap:break-word;
 }
 
 /* nav */
@@ -51,12 +52,13 @@ header .eyebrow{
 }
 header h1{font-size:48px; font-weight:700; letter-spacing:-1.5px; line-height:1.1}
 header .role{font-size:17px; color:var(--ink-2); margin-top:6px}
-header .bio{margin-top:28px; max-width:620px; color:var(--ink-2); font-size:15px}
+header .bio{margin-top:28px; max-width:none; color:var(--ink-2); font-size:15px}
 header .bio p+p{margin-top:12px}
 header .contact{margin-top:32px; font-size:13.5px; color:var(--ink-2)}
 header .contact a{color:var(--ink-2); text-decoration:none; border-bottom:1px solid var(--line)}
 header .contact a:hover{color:var(--accent); border-color:var(--accent)}
-header .contact span{margin-right:20px; white-space:nowrap}
+header .contact span{white-space:nowrap}
+header .contact span+span::before{content:'·'; color:var(--ink-3); margin:0 10px}
 
 /* stack */
 .stack{padding:40px 0; border-bottom:1px solid var(--line)}
@@ -72,7 +74,7 @@ header .contact span{margin-right:20px; white-space:nowrap}
 .project+.project{border-top:1px solid var(--line)}
 .p-name{font-size:34px; font-weight:700; letter-spacing:-.8px; line-height:1.15}
 .p-sub{font-size:15px; color:var(--ink-2); margin-top:2px}
-.p-desc{margin-top:20px; max-width:640px; color:var(--ink-2)}
+.p-desc{margin-top:20px; max-width:none; color:var(--ink-2)}
 .p-meta{margin-top:16px; font-size:13px; color:var(--ink-3)}
 .p-meta a{color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(20,85,95,.3)}
 
@@ -92,7 +94,7 @@ header .contact span{margin-right:20px; white-space:nowrap}
   color:var(--ink-3); text-transform:uppercase; font-weight:500;
   padding-bottom:10px; border-bottom:1px solid var(--line);
 }
-.group-note{font-size:14px; color:var(--ink-2); margin:16px 0 4px; max-width:640px}
+.group-note{font-size:14px; color:var(--ink-2); margin:16px 0 4px}
 
 /* issue accordion */
 details.issue{border-bottom:1px solid var(--line-2)}
