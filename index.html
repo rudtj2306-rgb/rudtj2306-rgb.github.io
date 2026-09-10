@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>강경서 · Backend Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16191c;
+  --ink-2:#4a5257;
+  --ink-3:#858e94;
+  --line:#e2e6e8;
+  --line-2:#f0f2f3;
+  --bg:#fbfbfa;
+  --accent:#14555f;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg); color:var(--ink);
+  font-size:15px; line-height:1.75; font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* nav */
+nav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(251,251,250,.88); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+nav .in{
+  max-width:900px; margin:0 auto; padding:14px 28px;
+  display:flex; align-items:baseline; gap:22px;
+}
+nav .me{font-weight:700; letter-spacing:-.2px; margin-right:auto}
+nav a{color:var(--ink-2); text-decoration:none; font-size:13.5px}
+nav a:hover{color:var(--accent)}
+
+.wrap{max-width:900px; margin:0 auto; padding:0 28px}
+
+/* hero */
+header{padding:88px 0 64px; border-bottom:1px solid var(--line)}
+header .eyebrow{
+  font-size:11.5px; letter-spacing:.22em; color:var(--ink-3);
+  text-transform:uppercase; margin-bottom:14px;
+}
+header h1{font-size:48px; font-weight:700; letter-spacing:-1.5px; line-height:1.1}
+header .role{font-size:17px; color:var(--ink-2); margin-top:6px}
+header .bio{margin-top:28px; max-width:620px; color:var(--ink-2); font-size:15px}
+header .bio p+p{margin-top:12px}
+header .contact{margin-top:32px; font-size:13.5px; color:var(--ink-2)}
+header .contact a{color:var(--ink-2); text-decoration:none; border-bottom:1px solid var(--line)}
+header .contact a:hover{color:var(--accent); border-color:var(--accent)}
+header .contact span{margin-right:20px; white-space:nowrap}
+
+/* stack */
+.stack{padding:40px 0; border-bottom:1px solid var(--line)}
+.stack h3{font-size:11.5px; letter-spacing:.18em; color:var(--ink-3); text-transform:uppercase; margin-bottom:16px}
+.chips{display:flex; flex-wrap:wrap; gap:7px}
+.chip{
+  font-size:12.5px; color:var(--ink-2); background:#fff;
+  border:1px solid var(--line); border-radius:3px; padding:3px 10px;
+}
+
+/* project */
+.project{padding:72px 0 8px}
+.project+.project{border-top:1px solid var(--line)}
+.p-name{font-size:34px; font-weight:700; letter-spacing:-.8px; line-height:1.15}
+.p-sub{font-size:15px; color:var(--ink-2); margin-top:2px}
+.p-desc{margin-top:20px; max-width:640px; color:var(--ink-2)}
+.p-meta{margin-top:16px; font-size:13px; color:var(--ink-3)}
+.p-meta a{color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(20,85,95,.3)}
+
+/* metrics */
+.metrics{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:var(--line); border:1px solid var(--line);
+  margin:36px 0 8px; border-radius:4px; overflow:hidden;
+}
+.metric{background:#fff; padding:22px 20px}
+.metric .n{font-size:28px; font-weight:700; color:var(--accent); letter-spacing:-1px; line-height:1.1}
+.metric .l{font-size:12px; color:var(--ink-3); margin-top:8px; line-height:1.5}
+
+/* group heading */
+.group{
+  margin:56px 0 4px; font-size:12px; letter-spacing:.16em;
+  color:var(--ink-3); text-transform:uppercase; font-weight:500;
+  padding-bottom:10px; border-bottom:1px solid var(--line);
+}
+.group-note{font-size:14px; color:var(--ink-2); margin:16px 0 4px; max-width:640px}
+
+/* issue accordion */
+details.issue{border-bottom:1px solid var(--line-2)}
+details.issue summary{
+  cursor:pointer; list-style:none; padding:18px 0;
+  display:flex; align-items:flex-start; gap:14px;
+}
+details.issue summary::-webkit-details-marker{display:none}
+.tag{
+  flex:none; font-size:10.5px; color:var(--ink-3);
+  border:1px solid var(--line); border-radius:2px;
+  padding:2px 7px; margin-top:3px; white-space:nowrap;
+}
+.title{font-size:16px; font-weight:500; letter-spacing:-.2px; flex:1}
+.caret{flex:none; color:var(--ink-3); font-size:12px; margin-top:5px; transition:transform .15s}
+details[open] .caret{transform:rotate(90deg)}
+.body{padding:2px 0 30px}
+
+/* spec rows */
+.row{display:flex; gap:20px; padding:9px 0; border-top:1px solid var(--line-2)}
+.row:first-child{border-top:none}
+.k{flex:none; width:76px; font-size:12.5px; color:var(--ink-3); padding-top:2px}
+.v{flex:1; font-size:14.2px; color:var(--ink)}
+.v ol{margin:0; padding-left:17px}
+.v ol li{margin-bottom:3px}
+.row.off .v{color:var(--ink-2); font-size:13.5px}
+.row.res .k{color:var(--accent)}
+
+code{font-family:var(--mono); font-size:12.5px; background:#eef1f2; padding:1px 5px; border-radius:2px}
+
+/* data table */
+table.data{border-collapse:collapse; margin-top:14px; font-size:13.5px; width:100%; max-width:480px}
+table.data th{
+  text-align:left; font-weight:500; color:var(--ink-3); font-size:12.5px;
+  border-bottom:1px solid var(--ink); padding:6px 14px 6px 0;
+}
+table.data td{border-bottom:1px solid var(--line-2); padding:7px 14px 7px 0}
+table.data td.hi{color:var(--accent); font-weight:700}
+
+/* diagram */
+figure{margin:20px 0 6px}
+figure svg{max-width:100%; height:auto}
+
+footer{
+  margin-top:72px; padding:36px 0 56px;
+  border-top:1px solid var(--line); font-size:13px; color:var(--ink-3);
+}
+
+@media (max-width:680px){
+  header{padding:56px 0 44px}
+  header h1{font-size:36px}
+  .p-name{font-size:27px}
+  .metrics{grid-template-columns:1fr}
+  .row{flex-direction:column; gap:2px}
+  .k{width:auto}
+  nav .in{gap:14px; padding:12px 20px}
+  .wrap{padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="in">
+  <span class="me">강경서</span>
+  <a href="#popspot">POPSPOT</a>
+  <a href="#infra">인프라·배포</a>
+  <a href="#mozu">MOZU</a>
+  <a href="https://github.com/kyoungtta">GitHub</a>
+</div></nav>
+
+<header><div class="wrap">
+  <div class="eyebrow">Portfolio</div>
+  <h1>강경서</h1>
+  <div class="role">Backend Engineer</div>
+  <div class="bio">
+    <p>두 개의 예약 시스템을 만들며 마주친 문제들을 정리했습니다. 트래픽이 몰리는 구간에서 데이터가 어긋나지 않게 하는 일, 겉으로는 멀쩡해 보이는 실패를 드러내는 일, 장애가 서버 전체로 번지지 않게 막는 일이 대부분입니다.</p>
+    <p>각 항목은 문제 → 원인 → 해결 과정 → 결과 순서로 적었고, 확보하지 못한 부분은 트레이드오프로 남겨 두었습니다.</p>
+  </div>
+  <div class="contact">
+    <span><a href="mailto:rudtj1216@gmail.com">rudtj1216@gmail.com</a></span>
+    <span>010-2247-1216</span>
+    <span><a href="https://github.com/kyoungtta">github.com/kyoungtta</a></span>
+  </div>
+</div></header>
+
+<section class="stack"><div class="wrap">
+  <h3>기술 스택</h3>
+  <div class="chips">
+    <span class="chip">Java</span><span class="chip">Kotlin</span>
+    <span class="chip">Spring Boot</span><span class="chip">Spring Security</span><span class="chip">JPA</span>
+    <span class="chip">MySQL</span><span class="chip">Redis</span>
+    <span class="chip">JUnit</span><span class="chip">k6</span><span class="chip">Prometheus</span><span class="chip">Grafana</span>
+    <span class="chip">Docker</span><span class="chip">Terraform</span><span class="chip">AWS</span><span class="chip">GitHub Actions</span>
+  </div>
+</div></section>
+
+<!-- ============ POPSPOT ============ -->
+<section class="project" id="popspot"><div class="wrap">
+  <div class="p-name">POPSPOT</div>
+  <div class="p-sub">팝업스토어 예약 플랫폼</div>
+  <div class="p-desc">오프라인 팝업의 현장 예약 혼잡을 온라인 사전 예약으로 풀고, 대규모 동시 접속에서의 동시성과 정합성을 해결한 예약 시스템입니다.</div>
+  <div class="p-meta">
+    Spring Boot · MySQL · Redis · Docker · Terraform · AWS &nbsp;|&nbsp;
+    <a href="https://github.com/kyoungtta/popspot">github.com/kyoungtta/popspot</a>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="n">1.9배</div><div class="l">처리량 · DB 락 방식 대비</div></div>
+    <div class="metric"><div class="n">7.8배</div><div class="l">p95 지연 단축 · 5.54s → 0.71s</div></div>
+    <div class="metric"><div class="n">33초 → 0초</div><div class="l">배포 다운타임 · 블루/그린 전환</div></div>
+  </div>
+
+  <div class="group">애플리케이션</div>
+
+  <details class="issue" open>
+    <summary><span class="tag">동시성 · 성능</span><span class="title">선착순 재고 경합 구조 개선 — 단일 카운터 도입</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">예약 오픈 시 높은 트래픽에서 재고를 정확히 차감하면서 성능도 유지해야 했습니다. 기존 DB 원자적 업데이트는 정합성은 보장되나 row lock 경합으로 응답 대기 시 병목이 생겼습니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v">같은 슬롯에 요청이 몰리면 DB row lock을 두고 경합이 발생하고, 대기가 쌓이며 처리량이 떨어집니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>Redis 원자 연산으로 옮겨 경합 구간을 짧게 만들어 처리량과 응답시간을 개선하고자 했습니다.</li>
+        <li>Redis 선차감으로 옮기자 GET-DECR 사이에 다른 요청이 끼어들어 과예약이 발생했습니다.</li>
+        <li>Lua Script와 단일 카운터를 검토했습니다. 둘 다 과예약은 없었으나 Lua는 단일 스레드 특성상 성능이 저하됐습니다.</li>
+        <li>GET 없이 DECR 한 번으로 차감하고 음수면 INCR로 롤백하는 단일 카운터 방식을 택했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">
+        DB 락 방식 대비 TPS 1.9배 · p95 7.8배, Lua 대비 p95 5.1배 개선. 정확성은 단위 테스트로 검증했습니다 — DECR 음수 시 롤백과 DB 저장 차단, 저장 실패 시 복구가 동작합니다.
+        <figure>
+          <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans KR, sans-serif" font-size="10.5">
+            <defs><marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16191c"/></marker></defs>
+            <g stroke="#16191c" stroke-width="1.1" fill="none">
+              <rect x="6" y="80" width="86" height="30" rx="3"/>
+              <rect x="130" y="80" width="106" height="30" rx="3"/>
+              <polygon points="290,95 342,72 394,95 342,118"/>
+              <rect x="288" y="6" width="110" height="28" rx="3"/>
+              <rect x="280" y="152" width="124" height="30" rx="3"/>
+              <polygon points="452,167 504,144 556,167 504,190"/>
+              <rect x="584" y="152" width="110" height="30" rx="3"/>
+              <rect x="448" y="80" width="112" height="30" rx="3" fill="#e8f1f2" stroke="#14555f" stroke-width="1.5"/>
+              <line x1="92" y1="95" x2="128" y2="95" marker-end="url(#a)"/>
+              <line x1="236" y1="95" x2="288" y2="95" marker-end="url(#a)"/>
+              <line x1="342" y1="72" x2="342" y2="36" marker-end="url(#a)"/>
+              <line x1="342" y1="118" x2="342" y2="150" marker-end="url(#a)"/>
+              <line x1="404" y1="167" x2="450" y2="167" marker-end="url(#a)"/>
+              <line x1="556" y1="167" x2="582" y2="167" marker-end="url(#a)"/>
+              <line x1="504" y1="144" x2="504" y2="112" marker-end="url(#a)"/>
+            </g>
+            <g fill="#16191c" text-anchor="middle">
+              <text x="49" y="99">사용자 요청</text>
+              <text x="183" y="99">Redis DECR 차감</text>
+              <text x="342" y="92">차감 결과</text><text x="342" y="104">&lt; 0 ?</text>
+              <text x="343" y="24">INCR 롤백 · 예약 실패</text>
+              <text x="342" y="171">DB 예약 원장 저장</text>
+              <text x="504" y="164">DB 저장</text><text x="504" y="176">성공?</text>
+              <text x="639" y="171">INCR 보상 · 실패</text>
+              <text x="504" y="99" font-weight="700" fill="#14555f">예약 완료</text>
+            </g>
+            <g fill="#858e94" font-size="9.5">
+              <text x="350" y="56">예</text><text x="350" y="138">아니오</text>
+              <text x="560" y="160">아니오</text><text x="512" y="130">예</text>
+            </g>
+          </svg>
+        </figure>
+      </div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">관측 · 정합성</span><span class="title">커밋 이후 S3 처리 실패를 감지 가능한 구조로 전환</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">afterCommit으로 옮긴 S3 이동이 실패하면 로그만 남고 끝났습니다. DB의 imageKey는 새 경로를 가리키는데 실제 파일은 그 경로에 없어, 사용자에게 깨진 이미지로 그대로 드러납니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v">내부에서만 아는 조용한 실패가 아니라 사용자에게 노출되는 정합성 문제인데, 로그는 누군가 일부러 들여다보지 않으면 아무도 모릅니다. 이 구조의 진짜 약점은 재시도가 없다는 것이 아니라 실패를 능동적으로 감지할 수단이 없다는 점이라고 판단했습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>재시도보다 감지를 먼저 확보했습니다. 실패를 메트릭(<code>s3.operation.failure</code>)으로 노출하고, 재시도는 별도 메트릭으로 분리해 흡수된 실패와 사람이 개입해야 할 실패를 구분했습니다.</li>
+        <li>일시적 오류 흡수를 위해 짧은 재시도를 추가했습니다. 최초 1회 + 재시도 2회(100ms, 200ms), 응답 경로 안이라 상한을 300ms로 두었습니다.</li>
+        <li>최종 실패해도 예외를 전파하지 않습니다. 커밋이 끝난 뒤라 예외를 던져도 롤백되지 않고 재등록 중복만 유발합니다.</li>
+        <li>커밋 이후 실행 등록 로직을 공통 컴포넌트로 분리해, 예외를 삼키는 계층의 경계를 명확히 했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">일시적 오류는 재시도로 흡수되어 사용자에게 노출되지 않고, 최종 실패는 메트릭으로 사용자 문의 전에 인지할 수 있게 됐습니다. 기존 삭제 경로의 예외 전파 문제도 함께 해결했고, 6개 시나리오를 단위 테스트로 검증했습니다.</div></div>
+      <div class="row off"><div class="k">트레이드오프</div><div class="v">자동 복구는 확보하지 못했습니다. 3회 모두 실패하면 운영자가 수동 복구해야 합니다. Outbox나 재시도 큐로 자동화할 수 있으나, 이미지 실패가 예약 흐름을 막지 않고 재시도로 대부분 흡수되므로 현재 규모에서는 감지 체계까지가 적정선이라고 판단했습니다.</div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">Redis · 성능</span><span class="title">대기열 스케줄러의 탐색 비용 개선</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">대기열 스케줄러가 활성 팝업을 찾을 때 <code>redisTemplate.keys()</code>로 전체 키를 탐색하고 있었습니다. 전체 서비스 응답 지연으로 이어질 수 있는 문제였습니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v"><code>KEYS</code>는 전체 키를 순회하는 O(N) 명령인데, Redis는 단일 스레드라 실행 중 다른 모든 요청이 블로킹됩니다. 키가 늘면 정원 차감 같은 핵심 명령까지 멈출 수 있습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>활성 팝업 ID만 담는 Set 인덱스로 전체 탐색을 없애고 단일 스레드 블로킹을 해소했습니다.</li>
+        <li>빈 팝업을 즉시 삭제하면 확인과 제거 사이에 새 대기자가 누락될 수 있어, 삭제 시점을 조회 경로로 옮겼습니다(lazy deletion).</li>
+        <li>그래도 남는 창은 순회 전체를 Lua 스크립트로 원자화해 제거했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">스케줄러 주기당 Redis 왕복이 N+1회에서 1회로 줄었습니다. 전체 키 탐색이 사라져 조회 비용이 키 개수와 무관해졌고, 대기자 누락 경로는 수정 전 실패 / 수정 후 통과하는 회귀 테스트로 검증했습니다.</div></div>
+      <div class="row off"><div class="k">이후 과제</div><div class="v">스크립트가 활성 팝업 수 N만큼 EXISTS를 순회하므로 블로킹 시간이 N에 비례합니다. 현재 규모에서는 무시할 수 있으나, 수천 단위로 늘면 배치 분할이 필요합니다.</div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">정합성 · 분산 제어</span><span class="title">Redis 재구축 구간의 요청 유실 방지</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">Redis 상태를 DB 기준으로 재구축하는 중에 들어온 예약이 사라졌습니다. DB 조회(남은 자리 30) → 신규 예약 DECR(29) → 재구축이 SET 30으로 덮어쓰면서 차감이 증발해 과다 판매로 이어지는데, 사용자는 성공 응답을 받아 아무도 인지하지 못합니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v">재구축이 전부 블라인드 쓰기로 현재 값을 읽지 않고 덮어쓰니, DB 조회 시점과 쓰기 시점 사이의 변경이 모두 무시됩니다. 같은 패턴이 3개 도메인에 있었고, 슬롯 초기화는 도메인이 다른데도 예약 정원과 같은 key를 만졌습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>재구축 구간의 요청을 503으로 거절하는 게이트를 도입했습니다. 재구축은 수백 ms라 조용한 유실보다 명시적 거절이 낫다고 판단했습니다.</li>
+        <li>스코프를 도메인이 아닌 키 단위로 잡아 공통 컴포넌트화했습니다.</li>
+        <li><code>setIfAbsent</code> + TTL로 게이트 표시와 분산 상호배제를 겸했습니다.</li>
+        <li>게이트 해제와 DECR 경로를 각각 Lua로 원자화했습니다. 둘 다 check-then-act 구조라 분리하면 창이 남습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">lost update 경로를 제거하고 다중 인스턴스의 중복 재구축을 막았습니다. 3개 도메인이 동일 컴포넌트를 사용하며, 키 단위 스코프로 도메인 경계를 넘는 충돌도 차단됩니다. 3개 시나리오를 검증했습니다.</div></div>
+      <div class="row off"><div class="k">트레이드오프</div><div class="v">enqueue는 중간에 DB insert가 있어 원자화할 수 없습니다. 인터셉터로 창을 좁히고, 남은 창은 recover가 DB 기준으로 재구축하며 수렴시킵니다.</div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">장애 격리</span><span class="title">단일 장애점(Redis) 대비 — CircuitBreaker 장애 격리와 복구</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">Redis에 장애가 생기면 서버가 응답을 기다리며 타임아웃마다 스레드를 낭비하고 요청이 쌓일 수 있다고 예상했습니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v">Redis 호출이 예약 생성 경로의 필수 단계라, 응답이 없으면 그 뒤 로직이 전부 멈춥니다. 개별 요청의 실패를 넘어 한 의존성의 장애가 서버 전체로 번지는 구조였습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v">임계값은 운영 트래픽이 없는 환경이라 Sentinel 복구 시간과 일반 권장값 기준 초기값으로 두고, 운영 데이터 확보 후 재조정하는 것을 전제로 했습니다.<ol>
+        <li>폴백을 경로별로 분리했습니다. 차감은 남은 자리를 모른 채 통과시키면 오버셀이라 예외로 차단하고, 복구는 DB 취소와 환불이 끝난 뒤라 null 반환으로 흐름을 유지합니다.</li>
+        <li>slow-call 임계를 수백 ms로 낮춰 느려지기만 하는 장애에서도 스레드를 끊고, <code>minimum-number-of-calls</code>를 window(10)에 맞춰 명시했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">
+        장애 시 대기 없이 즉시 폴백하며 스레드 점유로 인한 전파가 차단됩니다. 오버셀과 취소 흐름 중단을 각각 다른 전략으로 방어합니다.
+        <figure>
+          <svg viewBox="0 0 620 128" xmlns="http://www.w3.org/2000/svg" font-family="Noto Sans KR, sans-serif" font-size="10.5">
+            <defs><marker id="b" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#16191c"/></marker></defs>
+            <g stroke="#16191c" stroke-width="1.1" fill="none">
+              <rect x="6" y="46" width="104" height="34" rx="17" fill="#e8f1f2" stroke="#14555f" stroke-width="1.5"/>
+              <rect x="230" y="46" width="96" height="34" rx="17"/>
+              <rect x="430" y="40" width="146" height="46" rx="8"/>
+              <line x1="110" y1="63" x2="228" y2="63" marker-end="url(#b)"/>
+              <line x1="326" y1="63" x2="428" y2="63" marker-end="url(#b)"/>
+              <path d="M430,48 C370,12 340,12 296,44" marker-end="url(#b)"/>
+              <path d="M430,80 C300,116 150,116 62,82" marker-end="url(#b)"/>
+            </g>
+            <g fill="#16191c" text-anchor="middle">
+              <text x="58" y="67" font-weight="700" fill="#14555f">CLOSED</text>
+              <text x="278" y="67" font-weight="700">OPEN</text>
+              <text x="503" y="58" font-weight="700">HALF_OPEN</text>
+              <text x="503" y="73" font-size="9.5" fill="#858e94">시험 3콜 허용</text>
+            </g>
+            <g fill="#858e94" font-size="9.5" text-anchor="middle">
+              <text x="169" y="55">최근 10콜 중 실패 50%</text>
+              <text x="377" y="55">10초 경과</text>
+              <text x="363" y="18">2콜 이상 실패</text>
+              <text x="246" y="116">시험 통과 · 자동 복귀</text>
+            </g>
+          </svg>
+        </figure>
+      </div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">Redis · 운영</span><span class="title">운영 종료일 기준 TTL로 카운터 키 생명주기 관리</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">재고 카운터 키를 언제까지 유지해야 할지 정해야 했습니다. 너무 짧게 잡으면 이후 취소·환불 처리 중에 키가 사라져 더 큰 문제가 될 수 있었습니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v">TTL 만료 시간을 슬롯 종료 시각 기준으로 잡으면, 운영 기간 내내 발생하는 취소·환불 시점에 이미 키가 만료돼 재고를 되돌릴 수 없게 됩니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>TTL을 슬롯 종료가 아닌 운영 종료일 기준으로 설정해 취소·환불 여유를 확보했습니다.</li>
+        <li>동시 만료 시 CPU 부하도 검토했으나, 예상 규모(약 7,000개 키)에선 문제없다고 판단했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">운영 기간 내 발생하는 취소·환불에서 재고 복구가 항상 가능해졌고, 운영 종료 후에는 키가 자동 정리되어 별도 삭제 로직 없이 메모리를 회수합니다.</div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">정합성 · 외부 시스템</span><span class="title">트랜잭션 커밋 이후로 S3 이미지 처리를 미뤄 정합성 보장</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">팝업스토어 등록·수정·삭제 시 S3 이미지를 트랜잭션 안에서 바로 처리하면, 이후 DB 작업이 실패해 롤백되어도 이미 옮기거나 지운 파일은 되돌릴 수 없습니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v">DB는 롤백으로 복구되지만 S3 파일 조작은 외부 시스템이라 롤백 대상이 아닙니다. 트랜잭션 중간에 파일을 건드리면 DB 상태와 실제 파일이 어긋날 수 있습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v">파일 조작을 트랜잭션이 확정된 뒤에만 일어나게 하고, 확정되지 못한 파일은 위치만으로 구분되도록 설계했습니다.<ol>
+        <li>이미지 이동·삭제를 afterCommit 시점으로 미루고, 트랜잭션 없이 호출되는 경우를 대비한 fallback도 두었습니다.</li>
+        <li>업로드는 temp에, 커밋 성공 시에만 final로 이동하도록 prefix를 분리했습니다. temp 잔류 파일은 DB 대조 없이 판별되며 Lifecycle 규칙(24h)으로 자동 정리됩니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">DB 롤백 시에도 파일이 그대로 남아 DB 상태와 S3 실제 파일이 어긋나지 않게 됐고, 연결되지 않은 이미지는 별도 배치 없이 회수됩니다.</div></div>
+    </div>
+  </details>
+
+  <div class="group" id="infra">인프라 · 배포</div>
+  <div class="group-note">애플리케이션을 실제로 운영 가능한 상태로 올리기 위해, 인프라를 코드로 정의하고 배포를 자동화했습니다. Terraform이 인프라를, GitHub Actions가 애플리케이션 배포를 담당하도록 경계를 나눴습니다.</div>
+
+  <details class="issue" open>
+    <summary><span class="tag">IaC</span><span class="title">Terraform으로 인프라 코드화</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">콘솔에서 수동으로 만든 EC2·보안그룹·IAM은 재현이 불가능했습니다. 어떤 설정을 했는지 기록이 남지 않고, 인스턴스를 다시 만들려면 같은 클릭을 반복해야 했습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>EC2·보안그룹·EIP·IAM 역할·S3를 Terraform으로 정의했습니다.</li>
+        <li>개인키가 state에 평문으로 남지 않도록 키페어는 코드화 대상에서 제외했습니다.</li>
+        <li>state는 S3 원격 저장소로 분리하고, 부트스트랩용 구성을 따로 두어 순환 의존을 해소했습니다.</li>
+        <li><code>user_data</code>로 Docker·MySQL·Redis·Nginx 초기 설치를 자동화했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v"><code>apply</code> 한 번으로 동일한 인프라가 재현되고, <code>destroy</code>로 잔여 리소스 없이 정리됩니다. 인스턴스를 통째로 교체해도 MySQL 데이터가 별도 볼륨에 남아 유지되는 것을 확인했습니다.</div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">검증</span><span class="title">코드 검증으로는 잡히지 않는 부팅 시점 실패 5건</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v"><code>validate</code>와 <code>plan</code>을 모두 통과했음에도 <code>user_data</code>가 부팅 중 실패했고, <code>apply</code>는 성공으로 끝나 실패가 드러나지 않았습니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v">user_data는 EC2 내부에서 부팅 중에 실행되므로 Terraform은 그 결과를 알 수 없습니다. 게다가 <code>set -e</code> 때문에 첫 실패 지점에서 스크립트 전체가 중단돼 이후 설치가 하나도 진행되지 않았습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>Ubuntu 24.04에서 제거된 awscli apt 패키지를 공식 설치 프로그램으로 교체했습니다.</li>
+        <li>24.04의 SSH 소켓 활성화로 부팅 시점에 존재하지 않는 <code>/run/sshd</code>를 사전 생성했습니다.</li>
+        <li><code>unzip</code>·<code>gpg</code>가 기존 파일을 만나면 대화형 프롬프트에서 멈추는 문제를 비대화형 옵션으로 해소했습니다.</li>
+        <li>볼륨이 연결되지 않아도 <code>mkfs</code>가 진행되던 경로를 명시적 실패로 바꿔 데이터 유실을 차단했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">클린 부팅에서 cloud-init 완주를 확인했습니다. 외부에서 애플리케이션·DB·Redis 포트가 모두 닫히고 Nginx만 노출되는 것도 함께 검증했습니다.</div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">무중단 배포</span><span class="title">블루/그린 전환과 롤백 경로 확보</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">기존 배포는 컨테이너를 내리고 다시 올리는 방식이라 전환 구간에 33초의 다운타임이 발생했습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>새 버전을 별도 포트에 먼저 띄우고, 헬스체크를 통과한 뒤에만 Nginx 업스트림을 전환하도록 했습니다.</li>
+        <li>헬스체크 실패 시 새 컨테이너만 제거하고 기존 컨테이너와 Nginx 설정은 그대로 유지합니다.</li>
+        <li>컨테이너에서 IAM 역할을 받도록 IMDS hop limit을 조정해, 배포 파이프라인에서 AWS 액세스 키를 제거했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">배포 중 요청이 끊기지 않는 것을 확인했습니다 — 다운타임 33초에서 0초. 실제 배포 실패 상황에서도 롤백 경로가 의도대로 동작해, 기존 서비스가 중단 없이 유지되는 것을 확인했습니다.</div></div>
+      <div class="row off"><div class="k">트레이드오프</div><div class="v">전환 순간 애플리케이션 컨테이너가 2개 존재하므로 인스턴스 메모리 여유가 필요합니다. 현재 사양에서는 동작하나, 트래픽이 늘면 인스턴스 타입 상향 또는 ECS 전환이 다음 단계입니다.</div></div>
+    </div>
+  </details>
+</div></section>
+
+<!-- ============ MOZU ============ -->
+<section class="project" id="mozu"><div class="wrap">
+  <div class="p-name">MOZU</div>
+  <div class="p-sub">파인다이닝 예약 플랫폼</div>
+  <div class="p-desc">외부 예약 플랫폼 의존에서 벗어나기 위해 자체 구축한 예약 시스템입니다. 매월 1일 오픈 직후 30초 내 전석이 매진되는 피크 트래픽을 대기열과 분산 락으로 처리합니다.</div>
+  <div class="p-meta">
+    Java → Kotlin 마이그레이션 · Spring · JPA · MySQL &nbsp;|&nbsp;
+    <a href="https://github.com/prgrms-be-devcourse/NBE9-11-3-Team07">github.com/prgrms-be-devcourse/NBE9-11-3-Team07</a>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="n">4.3배</div><div class="l">차감 경로 처리량 · 낙관적 락 대비</div></div>
+    <div class="metric"><div class="n">9.24ms</div><div class="l">조회 p95 · 3.83s에서 개선</div></div>
+    <div class="metric"><div class="n">99.6% → 0</div><div class="l">DB CPU · 인덱스 적용 후</div></div>
+  </div>
+
+  <div class="group">애플리케이션</div>
+
+  <details class="issue" open>
+    <summary><span class="tag">동시성 · 락 전략</span><span class="title">재고 동시성 제어 — 구간별 락 전략 선정</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">재고 차감과 반환은 동시성 부하 상태가 다릅니다. 트래픽이 다른 상황에 같은 락 전략을 사용하면 각 상황에서 불필요한 비용이 발생하고 성능이 떨어질 수 있다고 판단했습니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v">예약 오픈 시의 정원 차감은 수천~수만 명이 몰려 충돌이 극심하지만, 정원 반환(취소·수정)은 본인 예약 대상이라 충돌이 드뭅니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>k6로 200VU가 재고 1개 슬롯에 10,000건을 동시에 요청하는 시나리오를 분산 락과 낙관적 락에 모두 적용했습니다.</li>
+        <li>두 방식 모두 예약 통과는 1건이었으나, 성능이 분산 락 1,390 req/s · 낙관적 락 321 req/s로 분산 락이 우세했습니다.</li>
+        <li>충돌 빈도가 높은 차감은 재시도 폭증을 막는 분산 락을, 충돌이 드문 반환은 락 비용이 없는 낙관적 락을 채택했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">차감 경로는 낙관적 락 대비 4.3배 성능이 개선됐고, 반환 경로는 50건 동시 취소 중 1건만 성공하며 재고가 정확히 복구되는 것을 확인했습니다.</div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">부하 테스트 · DB</span><span class="title">대용량 부하 테스트로 조회 병목 발견 및 개선</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">기능 테스트만으로는 드러나지 않는 병목을 확인하기 위해 예약 100만 건 규모의 데이터셋과 k6·Grafana 관측 환경을 구성했습니다. 사용자별 예약 조회의 p95 응답시간이 3.83초까지 치솟아 사실상 사용 불가능한 수준이었습니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v"><code>WHERE user_id = ?</code> 조회가 인덱스 없이 실행되어 테이블 전체를 훑는 Full Scan이 발생했습니다. 100만 건을 매 요청마다 순회하니 CPU 사용량도 99.6%까지 올라 DB에 큰 부하가 걸렸습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>조회 조건인 user_id 컬럼에 인덱스를 추가해 Full Scan을 인덱스 탐색으로 전환했습니다.</li>
+        <li>인덱스는 쓰기 시 갱신 비용이 있어, 조회가 빈번한 컬럼에 선별적으로 적용했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">
+        100만 건 데이터, 100VU 부하로 인덱스 적용 전후를 k6와 Grafana로 검증했습니다. Full Scan이 사라지며 DB 부하가 근본적으로 제거됐습니다.
+        <table class="data">
+          <tr><th>지표</th><th>인덱스 전</th><th>인덱스 후</th></tr>
+          <tr><td>p95 응답시간</td><td>3.83s</td><td class="hi">9.24ms</td></tr>
+          <tr><td>avg 응답시간</td><td>3s</td><td class="hi">3.96ms</td></tr>
+          <tr><td>TPS</td><td>31.9/s</td><td class="hi">1,814/s</td></tr>
+          <tr><td>CPU 사용량</td><td>99.6%</td><td class="hi">거의 0</td></tr>
+          <tr><td>p95 목표(50ms 이하)</td><td>미달성</td><td class="hi">달성</td></tr>
+        </table>
+      </div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">트랜잭션</span><span class="title">스케줄러 @Transactional 자기 호출 문제 해결</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">재고를 방출하는 스케줄러에서 재고 반환과 예약 취소를 한 트랜잭션으로 처리해야 했는데, 실제로는 트랜잭션이 걸리지 않아 부분 실행 시 롤백되지 않는 위험이 있었습니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v">스케줄러가 같은 클래스 안의 <code>@Transactional</code> 메서드를 직접 호출하고 있었습니다. Spring의 <code>@Transactional</code>은 프록시를 통해 동작하는데, 같은 클래스 내부 호출은 프록시를 거치지 않아 트랜잭션이 적용되지 않습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>트랜잭션이 필요한 로직을 별도 서비스 클래스로 분리했습니다.</li>
+        <li>다른 빈으로 분리되면 호출 시 프록시를 거치게 되어 <code>@Transactional</code>이 정상 동작합니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">정원 반환과 예약 취소가 하나의 트랜잭션으로 묶여, 중간 실패 시 함께 롤백되도록 원자성을 보장합니다.</div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">어뷰징 대응</span><span class="title">취소 재고를 지연 방출해 즉시 선점 완화 (CANCEL_PENDING)</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">취소 재고를 즉시 반환하면 반환 시점이 예측 가능해, 자동화된 요청이 정상 사용자보다 유리하게 자리를 잡을 수 있습니다.</div></div>
+      <div class="row"><div class="k">원인</div><div class="v">오픈 직후 30분 이내에 취소하거나 같은 유저가 반복 취소할 경우, 암표·어뷰징 목적의 유저가 생길 것이라고 판단했습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>어뷰징이 의심되는 취소는 CANCEL_PENDING 상태로 두어, 동적 스케줄러가 랜덤한 시간에 반환하도록 했습니다.</li>
+        <li>Redis TTL은 만료 시점에 콜백을 보장하지 않아 알림 유실 가능성이 있었습니다. 재고가 영영 방출되지 않을 위험이 있어, 방출 시점을 DB에 저장하고 서버 재시작 시에도 복구 가능한 DB 기반 동적 스케줄러로 구현했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">완전한 어뷰징 방지는 아니지만, 반환 시점을 제어하는 것만으로 즉시 선점 난이도를 높일 수 있었습니다.</div></div>
+    </div>
+  </details>
+
+  <details class="issue">
+    <summary><span class="tag">협업 · 자동화</span><span class="title">AI 코드 리뷰 자동화로 리뷰 품질·속도 개선</span><span class="caret">▶</span></summary>
+    <div class="body">
+      <div class="row"><div class="k">문제</div><div class="v">PR마다 사람이 수동으로 리뷰하다 보니 리뷰 누락이 생기고, 팀 컨벤션 위반을 매번 사람이 체크하기 어려웠습니다.</div></div>
+      <div class="row"><div class="k">해결 과정</div><div class="v"><ol>
+        <li>GitHub Actions에 Gemini 기반 AI 코드 리뷰를 도입했습니다. 시니어 백엔드 개발자 페르소나를 부여하고, 팀 컨벤션을 자동 검증하도록 커스텀했습니다.</li>
+        <li>리뷰 결과를 심각도(필수·권장·참고)로 분류하고, CODEOWNERS와 랜덤 리뷰어 지정, Slack 알림을 연동해 리뷰 프로세스를 자동화했습니다.</li>
+      </ol></div></div>
+      <div class="row res"><div class="k">결과</div><div class="v">DB 비밀번호 하드코딩, JWT 시크릿 키 노출 같은 보안 이슈와 타임존 버그, 재고 중복 반환 등을 실제로 잡아냈습니다.</div></div>
+    </div>
+  </details>
+</div></section>
+
+<footer><div class="wrap">
+  강경서 · Backend Engineer &nbsp;·&nbsp; rudtj1216@gmail.com &nbsp;·&nbsp;
+  <a href="https://github.com/kyoungtta" style="color:var(--ink-3)">github.com/kyoungtta</a>
+</div></footer>
+
+</body>
+</html>
